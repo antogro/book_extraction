@@ -1,9 +1,12 @@
 #importé les package necessaire pour récuperer les infos des livres
 import requests
 from bs4 import BeautifulSoup
-import slugify
+from slugify import slugify 
 import csv
 import os
+from urllib.parse import urlparse
+import datetime
+
 
 #lien de la page d'accueille à scrapper
 #
@@ -21,7 +24,7 @@ def get_soup(url):
         return soup
     
 
-def get_url_category(url):
+def get_category_urls(url):
     """récupérer les liens des catégories"""
     category_link = []
     soup = get_soup(url)
@@ -30,15 +33,15 @@ def get_url_category(url):
     for li in li_list:
         a = li.find(['a'])
         link = a['href']
-        link = link.replace('../', '')
+        urls_category = link.replace('../', '')
         category_link.append('https://books.toscrape.com/' + link)
         category_links = category_link[1:]
 
     return category_links
 
 
-def get_Url(url):
-    """récuperer les lien de la page à scrapper"""
+def get_books_urls(url):
+    """récuperer les lien des livres la page à scrapper"""
     links = []
     soup = get_soup(url)
     tdl = soup.findAll('h3')
@@ -52,7 +55,7 @@ def get_Url(url):
 
 
 def get_next_page(url):
-    """récuperer les autres lien des multi-pages"""
+    """récuperer le lien de la page suivante"""
     soup = get_soup(url)
     next_page = soup.find('li', 'next')
     if not next_page:
@@ -64,6 +67,36 @@ def get_next_page(url):
     
     return link
 
+
+def get_all_category_name():
+    category_url = get_category_urls('https://books.toscrape.com/catalogue/category/books_1/index.html')
+    category_data = []
+    for row in category_url:
+        url = row.strip()
+        urls_category = url.replace('https://books.toscrape.com/../', 'https://books.toscrape.com/catalogue/category/')
+        try:
+            reponses = requests.get(url)
+            parsed_url = urlparse(reponses.url)
+            category = parsed_url.path.split('/')[-2]
+            category = category.rstrip('_0123456789').rstrip('_')
+            category_data.append({'category_name': category, 'category_url': urls_category})
+        except Exception as e:
+            print(f"Erreur lors de la récupération des données pour {url}: {e}")
+    for i, category_dict in enumerate(category_data, start=1):
+        print(f"{i}. {category_dict['category_name']}")
+    try:
+        category_index = int(input("Entrer le numéro de la catégorie choisie: "))
+        
+        if 1 <= category_index <= len(category_data):
+            print(f'Vous avez choisie la catégorie : {category_data[category_index -1]['category_name']}')
+            category_url = category_data[category_index -1]['category_url']
+            print(category_url)    
+        else:
+            print("Le numéro de la catégorie choisie n'est pas valide")
+           
+    except:
+        print("L'entrée saisie de la catégorie n'est pas valide")
+    return category_url
 
 #récuperer les informations de chaque livre
 #code UPC, price including taxe, price exluding taxe,
@@ -102,14 +135,25 @@ def get_book_data(url):
     star = soup.findAll('p', 'star-rating')
     if star:
         star_rating = star[0].get('class')[-1]
+        if star_rating == 'One':
+            star_rating = 1
+        elif star_rating == 'Two':
+            star_rating = 2
+        elif star_rating == 'Three':
+            star_rating = 3
+        elif star_rating == 'Four':
+            star_rating = 4
+        elif star_rating == 'Five':
+            star_rating = 5
         book_data['Star rating'] = star_rating
+
 
     #récuperer la catégorie du livre
     category = soup.find('ul', 'breadcrumb')
     li_list = category.find_all('li', limit = 4)
     if len(li_list) >=3:
-        book_category = li_list[2].get_text()
-        book_data['Book category'] = book_category
+        book_category = li_list[2].a.get_text()
+        book_data['category'] = book_category
 
     book_data['title'] = soup.find('h1').get_text()
     #print(book_data['Book category'])
@@ -122,35 +166,70 @@ def get_book_data(url):
 
 def get_image_url(url):
     """récuperer l'Url de l'image de chaque livre"""
-    url_image = {}
+    books_pict = {}
     soup = get_soup(url)
     image_url = soup.find(class_= 'item active')
     image = image_url.find('img')
     link_image = str(image['src'])
     link = link_image[5:]
-    url_image['image_url'] = 'https://books.toscrape.com/' + link
-    url_image['title'] = image['alt']
-    print(url_image)
-    #yield url_image
+    books_pict['title'] = image['alt']
+    books_pict['image_url'] = 'https://books.toscrape.com/' + link
+    return books_pict
+    
    
-
-
+#rajouter date et heure au nom du fichier
 def write_book_to_csv(book_data):
     """Ecrire les données des livres dans un fichier CSV"""
-    csv = 'C:/Users/anton/OneDrive/Bureau/openclassroom/book_extraction_scraper/book_extraction/csv'
-    if not os.path.exists(csv):
-        os.makedirs(csv)
-        for category, book in book_data.items():
-            category = slugify(category)
-            file_name = os.path.join(csv, f'{category}.csv')
-            if not os.path.exists(file_name):
-                with open(file_name, 'w', encoding='utf-8-sig', newline='') as file:
-                    fieldnames = book[0].keys
-                    writer = csv.DictWriter(file, fieldnames=fieldnames)
-                    writer.writeheader()
-                    writer.writerows(book)
-                
+    category = slugify(book_data[0].get('category'))
+    csv_path = 'C:/Users/anton/OneDrive/Bureau/openclassroom/book_extraction_scraper/book_extraction/csv'
+
+    file_name = os.path.join(csv_path, f'{category}.csv')
+    fieldnames = book_data[0].keys()
+    #if not os.path.exists(file_name):
+        #os.makedirs(csv_path)
+        
+    with open(file_name, 'w', encoding='utf-8-sig', newline='') as file:
+        
+        writer = csv.DictWriter(file, fieldnames=fieldnames)
+        writer.writeheader()
+        writer.writerows(book_data)
 
 
 
+def save_picture_to_folder(books_pict):
+    for books in books_pict:
+        now = datetime.datetime.now()
+        date_str = now.strftime('%Y-%m-%d')
+        folder_path = 'C:/Users/anton/OneDrive/Bureau/openclassroom/book_extraction_scraper/book_extraction/images/'
+        date_folder_path = os.path.join(folder_path, date_str)
+        if not os.path.exists(date_folder_path):
+            os.makedirs(date_folder_path)
+        file_name = books.get('title') + '.jpg'
+        image_url = books['image_url']
+        full_path = os.path.join(date_folder_path, file_name)
 
+        try:
+            res = requests.get(image_url)
+            res.raise_for_status()  # Raise an exception for unsuccessful requests (status codes not 2xx)
+            with open(full_path, 'wb') as file:
+                file.write(res.content)
+        except requests.exceptions.RequestException as e:
+            print(f"Error downloading image: {e}")  # Log or handle download errors
+
+
+
+# def save_picture_to_folder(books_pict):
+#     now = datetime.datetime.now()
+#     date_str = now.strftime('%Y-%m-%d')
+#     folder_path = 'C:/Users/anton/OneDrive/Bureau/openclassroom/book_extraction_scraper/book_extraction/images/'
+#     date_folder_path = os.path.join(folder_path, date_str)
+#     if not os.path.exists(date_folder_path):
+#         os.makedirs(date_folder_path)
+        
+    
+#     file_name = books_pict.get('title', 'unknown') + '.jpg'
+#     full_path = os.path.join(date_folder_path, file_name)
+
+#     res = requests.get(books_pict['image_url'])
+#     with open(full_path, 'wb') as file:
+#         file.write(res.content)

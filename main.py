@@ -1,51 +1,86 @@
 import book_scraper as bs
+import all_category_scraper as all_category_scraper
+import time
+
+
+def time_mode(nb_sec):
+     q,s=divmod(nb_sec,60)
+     h,m=divmod(q,60)
+     return "%d:%d:%d" %(h,m,s)
 
 def main():
-    """Fonction principale d'extraction/sauvegarde du site Books.toscrap"""
-# Récupérer la liste des urls des catégories Pour chaque url de la liste des urls des catégories 
-    PRIMARI_URL = 'https://books.toscrape.com/'
-    book_data = []
-    book_image = []
-    
-    category_url = bs.get_url_category(PRIMARI_URL)
-    print(category_url)
-   
-    for categories in category_url:
-     # Récupérer la liste des urls des livres de la catégorie (Gérer le multi page)
-        book_url = bs.get_Url(categories) 
-        print(book_url)
-         
-        # Pour chaque url des livres Récupérer les données du livre 
-        while bs.get_next_page(categories) is not  None:
-            next_page = bs.get_next_page(categories)
-            next_page_url  = bs.get_Url(next_page)
-            print(next_page_url)
-            book_url.extend(next_page_url)
+    start = time.time()
+    print('Que souhaitez-vous scraper')
+    print('1 : Ecrivez 1 si vous souhaitez scraper toutes les donneés de toutes les catégories')
+    print('2 : Ecrivez 2 si vous souhaitez scraper les données d\'une catégorie')
+    print('3 : Ecrivez 3 si vous souhaitez scraper les données d\'un livre')
+    print('4 : Quittezl\'application d\'extraction de livre.')
+    choice = input('Votre choix : ')
+    if choice == '1':
+        print('Vous avez fait le choix 1, vous allez télécharger toutes les données de tout les livres dans un fichier CSV')
+        all_category_scraper.all_category_scraper()
+        during_time = time.time() - start
+        time_code = (time_mode(during_time))
+        return time_code
+    elif choice == '2':
+        print('Vous avez fait le choix 2, patientez quelque instant pour indiquer la catégorie souhaitez.')
+        books_data = []
+        books_pict = []
+        one_category_url = bs.get_all_category_name()
+        books_url = bs.get_books_urls(one_category_url)
+
+        while bs.get_next_page(one_category_url) is not None:
+            next_page_url = bs.get_next_page(one_category_url)
+            next_page_book_url = bs.get_books_urls(next_page_url)
+            books_url.extend(next_page_book_url)
             break
+
+        for url in books_url:
+            books_data_dict = bs.get_book_data(url)
+            books_pict_dict = bs.get_image_url(url)
             
-       # Pour chaque url des livres Récupérer les données du livre
-        for url in book_url:
-            try :
-                book_data_dict = bs.get_book_data(url)
-                print(book_data_dict)
-                book_image_dict = bs.get_image_url(url)
-                print(book_image_dict)
-                # Sauvegarder le résultat (les données des livres) dans un fichier csv                
-                book_data.append(book_data_dict)
-                book_image.append(book_image_dict)
+            books_data.append(books_data_dict)
+            books_pict.append(books_pict_dict)
+            
+            
+        bs.write_book_to_csv(books_data)
+        bs.save_picture_to_folder(books_pict)
+        during_time = time.time() - start
+
+        time_code = (time_mode(during_time))
+        return time_code
+
+    elif choice == '3':
+        books_pict = []
+        books_data = []
+
+        print('Vous avez fait le choix 3, vous allez maintenant télécharger toutes les données d\'un seul livre dans un fichier CSV.')
+        one_book_url = input('Veuillez coller l\'url du livre à scraper: ')
         
-            except Exception as e:
-                        print(f"Erreur lors de la récupération des données pour: {e}")
-        bs.write_book_to_csv(book_data)
-        #write_book_to_csv(book_image)
+        books_data_dict = bs.get_book_data(one_book_url)
+        books_pict_dict = bs.get_image_url(one_book_url)
+
+        books_data.append(books_data_dict)
+        books_pict.append(books_pict_dict)
+        
+        bs.write_book_to_csv(books_data)
+        bs.save_picture_to_folder(books_pict) 
+        during_time = time.time() - start
+
+        time_code = (time_mode(during_time))
+        return time_code
+
+    elif choice == '4':
+        print('Vous avez fait le choix 4, vous allez quitter l\'application.')
+        exit()
+
+    else:
+        print('Vous n\'avez pas fait le bon choix! Veuillez écrire un chiffre entre 1 et 4')
+        
 
 if __name__ == '__main__':
     print("Début du programme")
-    try:
-        #main()
-        bs.get_image_url('https://books.toscrape.com/catalogue/the-mysterious-affair-at-styles-hercule-poirot-1_452/index.html')
-    except Exception as e:
-        print(f"Erreur lors de la récupération des données pour: {e}")
-
-    finally:
-        print("Fin du programme")
+    
+    main()
+    
+    print('Fin du programme en min/sec, merci d\'avoir utilisé books-toscrap, passez une agréable journée!')
