@@ -16,11 +16,15 @@ Pour installer le projet, il faut cloner le repository, soit en utilisant la cl�
 Pour cloner le repository il va vous falloir ouvrir l'inviter de commande (CMD).
 Puis Copier/Coller le bout de code suivant dans l'invité de commande, puis taper sur la touche Entrée 
 
-```git clone git@github.com:antogro/book_extraction.git```
+```bash
+git clone git@github.com:antogro/book_extraction.git
+```
 
 Après clonage du repository, retournez dans votre invité de commande, puis positionnez-vous dans le dossier contenant l'application
     Pour cela, utilisez la commande suivante:
-```cd book_extraction```
+```bash
+cd book_extraction
+```
 
 ### 1 bis - Téléchargement du repository compressé (zipper)
 
@@ -39,31 +43,44 @@ Il vous faut installer Python 3.9.10 ou plus pour faire fonctionner le programme
 
 Pour créer votre environnement virtuel, il vous faut ouvrir l'inviter de commande (CMD).
 utilisez la commande suivante dans votre invité de commande pour créer votre environnement:
-```python -m venv env```
+```bash
+python -m venv env
+```
 Puis Activer votre environnement virtuelle:
-```env/scripts/activate```
+```bash
+env/scripts/activate
+```
 
 
 ### Etape 2: Installer les packages
 Les packages permettent un bon fonctionnement de l'application, ne les oubliez pas.
-```pip install -r requirements.txt```
+```bash
+pip install -r requirements.txt
+```
 
 
 ### Etape 3: Lancer l'application
- - Enfin, pour lancer l'application:
-    Placez vous dans le dossier contenant le code:
-     ```cd python_files```
-    Puis lancez le programme avec la commande suivante:
-    ```python main.py```
-                           
-- Voilà votre programme est maintenant opérationnel, vous n'avez plus qu'à suivre les consignes.
+- Enfin, pour lancer l'application:
+Placez vous dans le dossier contenant le code:
+```bash
+cd python_files
+```
+- Puis lancez le programme avec la commande suivante:
+
+```bash
+python main.py
+```
+                        
+Voilà votre programme est maintenant opérationnel, vous n'avez plus qu'à suivre les consignes.
 
 
 ## Exemple d'utilisation
 
 Pour lancer l'application, il vous faut taper la commande suivante:
 
-```python main.py```
+```bash
+python main.py
+```
 
 Ensuite le programme vous proposera 4 choix : 
 1 : Ecrivez 1 si vous souhaitez scraper toutes les données de toutes les catégories
