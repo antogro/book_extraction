@@ -14,10 +14,10 @@ def main():
     print('Bienvenue dans l\'application d\'extraction de livre!')
     start = time.time()
     print('Que souhaitez-vous scraper')
-    print('1 : Ecrivez 1 si vous souhaitez scraper toutes les donneés de toutes les catégories')
+    print('1 : Ecrivez 1 si vous souhaitez scraper toutes les données de toutes les catégories')
     print('2 : Ecrivez 2 si vous souhaitez scraper les données d\'une catégorie')
     print('3 : Ecrivez 3 si vous souhaitez scraper les données d\'un livre')
-    print('4 : Ecrivez 4 si vous souhaitez Quittezl\'application d\'extraction de livre.')
+    print('4 : Ecrivez 4 si vous souhaitez Quittez l\'application d\'extraction de livre.')
     choice = input('Votre choix : ')
 
     if choice == '1':
@@ -55,11 +55,12 @@ def main():
         return time_code
 
     elif choice == '3':
+        PRIMARI_URL = 'https://books.toscrape.com/'
         books_pict = []
         books_data = []
 
         print('Vous avez fait le choix 3, vous allez maintenant télécharger toutes les données d\'un seul livre dans un fichier CSV.')
-        one_book_url = input('Veuillez coller l\'url du livre à scraper: ')
+        one_book_url = input(f'Veuillez coller l\'url du livre à scraper en allant sur le site web {PRIMARI_URL}: ')
         
         books_data_dict = bs.get_book_data(one_book_url)
         books_pict_dict = bs.get_image_url(one_book_url)
