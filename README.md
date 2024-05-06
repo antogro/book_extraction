@@ -16,14 +16,11 @@ Pour installer le projet, il faut cloner le repository, soit en utilisant la cl�
 Pour cloner le repository il va vous falloir ouvrir l'inviter de commande (CMD).
 Puis Copier/Coller le bout de code suivant dans l'invité de commande, puis taper sur la touche Entrée 
 
-```
-git clone git@github.com:antogro/book_extraction.git
+'''git clone git@github.com:antogro/book_extraction.git'''
 
-```
 Après clonage du repository, retournez dans votre invité de commande, puis positionnez-vous dans le dossier contenant l'application
     Pour cela, utilisez la commande suivante:
-    '#cd book_extraction'
-
+'''cd book_extraction'''
 
 ### 1 bis - Téléchargement du repository compressé (zipper)
 
@@ -38,27 +35,28 @@ Placez vous dans ce dossier, clique droit sur le milieu de la page, puis cliquer
 ### Etape 1: Installer Pyhton et créer son environnement virtuel
 
 Il vous faut installer Python 3.9.10 ou plus pour faire fonctionner le programme.  
-'#[Lien pour télécharger la dernière version de python](https://www.python.org/downloads/)'
+[Lien pour télécharger la dernière version de python](https://www.python.org/downloads/)
 
 Pour créer votre environnement virtuel, il vous faut ouvrir l'inviter de commande (CMD).
 utilisez la commande suivante dans votre invité de commande pour créer votre environnement:
-'#python -m venv env'
-
+'''python -m venv env''''
 Puis Activer votre environnement virtuelle:
-'#env/scripts/activate'
+'''env/scripts/activate'''
 
 
 ### Etape 2: Installer les packages
 Les packages permettent un bon fonctionnement de l'application, ne les oubliez pas.
-'# pip install -r requirements.txt'
+'''
+pip install -r requirements.txt
+'''
 
 
 ### Etape 3: Lancer l'application
  - Enfin, pour lancer l'application:
     Placez vous dans le dossier contenant le code:
-     '#cd python_files#
+     '''cd python_files'''
     Puis lancez le programme avec la commande suivante:
-    '#python main.py'
+    '''python main.py'''
                            
 - Voilà votre programme est maintenant opérationnel, vous n'avez plus qu'à suivre les consignes.
 
