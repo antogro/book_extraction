@@ -1,4 +1,4 @@
-# book_extraction
+# Book_extraction
 
 ## Description
 L'application Book_scraper permet d'extraire les informations (titre, code UPC, prix TTC et HT, quantité disponible, note et description sur 5, catégorie) d'un livre, d'une catégorie de livres ou de tous les livres du site web.
@@ -83,10 +83,10 @@ python main.py
 ```
 
 Ensuite le programme vous proposera 4 choix : 
-1 : Ecrivez 1 si vous souhaitez scraper toutes les données de toutes les catégories
-2 : Ecrivez 2 si vous souhaitez scraper les données d'une catégorie
-3 : Ecrivez 3 si vous souhaitez scraper les données d'un livre
-4 : Ecrivez 4 si vous souhaitez Quittez l'application d'extraction de livre.
+- 1 : Ecrivez 1 si vous souhaitez scraper toutes les données de toutes les catégories
+- 2 : Ecrivez 2 si vous souhaitez scraper les données d'une catégorie
+- 3 : Ecrivez 3 si vous souhaitez scraper les données d'un livre
+- 4 : Ecrivez 4 si vous souhaitez Quittez l'application d'extraction de livre.
 
 Pour mon exemple, je vais choisir le numéro '3'
 L'application vous confirmera votre choix, puis vous proposera un lien vous permettant de sélectionner l'url du livre voulu **https://books.toscrape.com/**.
