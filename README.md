@@ -16,11 +16,11 @@ Pour installer le projet, il faut cloner le repository, soit en utilisant la cl�
 Pour cloner le repository il va vous falloir ouvrir l'inviter de commande (CMD).
 Puis Copier/Coller le bout de code suivant dans l'invité de commande, puis taper sur la touche Entrée 
 
-'''git clone git@github.com:antogro/book_extraction.git'''
+```git clone git@github.com:antogro/book_extraction.git```
 
 Après clonage du repository, retournez dans votre invité de commande, puis positionnez-vous dans le dossier contenant l'application
     Pour cela, utilisez la commande suivante:
-'''cd book_extraction'''
+```cd book_extraction```
 
 ### 1 bis - Téléchargement du repository compressé (zipper)
 
@@ -39,24 +39,22 @@ Il vous faut installer Python 3.9.10 ou plus pour faire fonctionner le programme
 
 Pour créer votre environnement virtuel, il vous faut ouvrir l'inviter de commande (CMD).
 utilisez la commande suivante dans votre invité de commande pour créer votre environnement:
-'''python -m venv env''''
+```python -m venv env```
 Puis Activer votre environnement virtuelle:
-'''env/scripts/activate'''
+```env/scripts/activate```
 
 
 ### Etape 2: Installer les packages
 Les packages permettent un bon fonctionnement de l'application, ne les oubliez pas.
-'''
-pip install -r requirements.txt
-'''
+```pip install -r requirements.txt```
 
 
 ### Etape 3: Lancer l'application
  - Enfin, pour lancer l'application:
     Placez vous dans le dossier contenant le code:
-     '''cd python_files'''
+     ```cd python_files```
     Puis lancez le programme avec la commande suivante:
-    '''python main.py'''
+    ```python main.py```
                            
 - Voilà votre programme est maintenant opérationnel, vous n'avez plus qu'à suivre les consignes.
 
@@ -65,14 +63,13 @@ pip install -r requirements.txt
 
 Pour lancer l'application, il vous faut taper la commande suivante:
 
-```bash
-python main.py
-```
+```python main.py```
+
 Ensuite le programme vous proposera 4 choix : 
-    '1 : Ecrivez 1 si vous souhaitez scraper toutes les données de toutes les catégories'
-    '2 : Ecrivez 2 si vous souhaitez scraper les données d'une catégorie'
-    '3 : Ecrivez 3 si vous souhaitez scraper les données d'un livre'
-    '4 : Ecrivez 4 si vous souhaitez Quittez l'application d'extraction de livre.'
+1 : Ecrivez 1 si vous souhaitez scraper toutes les données de toutes les catégories
+2 : Ecrivez 2 si vous souhaitez scraper les données d'une catégorie
+3 : Ecrivez 3 si vous souhaitez scraper les données d'un livre
+4 : Ecrivez 4 si vous souhaitez Quittez l'application d'extraction de livre.
 
 Pour mon exemple, je vais choisir le numéro '3'
 L'application vous confirmera votre choix, puis vous proposera un lien vous permettant de sélectionner l'url du livre voulu **https://books.toscrape.com/**.
