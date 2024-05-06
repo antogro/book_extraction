@@ -8,13 +8,14 @@ def time_mode(nb_sec):
      h,m=divmod(q,60)
      return "%d:%d:%d" %(h,m,s)
 
+
 def main():
     start = time.time()
     print('Que souhaitez-vous scraper')
     print('1 : Ecrivez 1 si vous souhaitez scraper toutes les donneés de toutes les catégories')
     print('2 : Ecrivez 2 si vous souhaitez scraper les données d\'une catégorie')
     print('3 : Ecrivez 3 si vous souhaitez scraper les données d\'un livre')
-    print('4 : Quittezl\'application d\'extraction de livre.')
+    print('4 : Ecrivez 4 si vous souhaitez Quittezl\'application d\'extraction de livre.')
     choice = input('Votre choix : ')
     if choice == '1':
         print('Vous avez fait le choix 1, vous allez télécharger toutes les données de tout les livres dans un fichier CSV')
@@ -22,6 +23,7 @@ def main():
         during_time = time.time() - start
         time_code = (time_mode(during_time))
         return time_code
+
     elif choice == '2':
         print('Vous avez fait le choix 2, patientez quelque instant pour indiquer la catégorie souhaitez.')
         books_data = []
@@ -41,7 +43,6 @@ def main():
             
             books_data.append(books_data_dict)
             books_pict.append(books_pict_dict)
-            
             
         bs.write_book_to_csv(books_data)
         bs.save_picture_to_folder(books_pict)
@@ -81,6 +82,6 @@ def main():
 if __name__ == '__main__':
     print("Début du programme")
     
-    main()
+    time_code = main()
     
-    print('Fin du programme en min/sec, merci d\'avoir utilisé books-toscrap, passez une agréable journée!')
+    print(f'Fin du programme en {time_code} min/sec, merci d\'avoir utilisé books-toscrap, passez une agréable journée!')

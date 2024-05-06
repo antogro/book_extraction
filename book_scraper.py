@@ -69,6 +69,7 @@ def get_next_page(url):
 
 
 def get_all_category_name():
+    """Fonction qui permet de récupérer le nom des catégories"""
     category_url = get_category_urls('https://books.toscrape.com/catalogue/category/books_1/index.html')
     category_data = []
     for row in category_url:
@@ -204,18 +205,19 @@ def save_picture_to_folder(books_pict):
         date_folder_path = os.path.join(folder_path, date_str)
         if not os.path.exists(date_folder_path):
             os.makedirs(date_folder_path)
-        file_name = books.get('title') + '.jpg'
+        file_name = slugify(books.get('title')) + '.jpg'
         image_url = books['image_url']
         full_path = os.path.join(date_folder_path, file_name)
-
-        try:
-            res = requests.get(image_url)
-            res.raise_for_status()  # Raise an exception for unsuccessful requests (status codes not 2xx)
-            with open(full_path, 'wb') as file:
-                file.write(res.content)
-        except requests.exceptions.RequestException as e:
-            print(f"Error downloading image: {e}")  # Log or handle download errors
-
+        if file_name not in date_folder_path:
+            try:
+                res = requests.get(image_url)
+                res.raise_for_status()  # Raise an exception for unsuccessful requests (status codes not 2xx)
+                with open(full_path, 'wb') as file:
+                    file.write(res.content)
+            except requests.exceptions.RequestException as e:
+                print(f"Error downloading image: {e}")  # Log or handle download errors
+        else:
+            pass
 
 
 # def save_picture_to_folder(books_pict):

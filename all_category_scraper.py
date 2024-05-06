@@ -4,6 +4,7 @@ from urllib.parse import urlparse
 
 
 def get_category_name():
+    """Fonction qui permet de récupérer le nom des catégories"""
     category_url = bs.get_category_urls('https://books.toscrape.com/catalogue/category/books_1/index.html')
     category_name = set()
     for row in category_url:
@@ -19,12 +20,11 @@ def get_category_name():
         return category_name
 
 
-
 def all_category_scraper():
     """Fonction principale d'extraction/sauvegarde du site Books.toscrap"""
-# Récupérer la liste des urls des catégories Pour chaque url de la liste des urls des catégories 
     PRIMARI_URL = 'https://books.toscrape.com/'
     
+# Récupérer la liste des urls des catégories Pour chaque url de la liste des urls des catégories 
     category_url = bs.get_category_urls(PRIMARI_URL)
    
     for categories in category_url:
@@ -54,6 +54,6 @@ def all_category_scraper():
         for category in category_name:
             bs.write_book_to_csv(book_data)
             bs.save_picture_to_folder(book_image)
-        #write_book_to_csv(book_image)
+       
 
 
