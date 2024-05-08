@@ -1,5 +1,4 @@
 import time
-
 from python_files import all_category_scraper 
 
 def time_mode(nb_sec):

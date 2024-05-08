@@ -60,12 +60,8 @@ pip install -r requirements.txt
 
 
 ### Etape 3: Lancer l'application
-- Enfin, pour lancer l'application:
-Placez vous dans le dossier contenant le code:
-```bash
-cd python_files
-```
-- Puis lancez le programme avec la commande suivante:
+- Enfin, pour lancer l'application,
+lancez le programme avec la commande suivante:
 
 ```bash
 python main.py
@@ -92,7 +88,6 @@ Pour mon exemple, je vais choisir le numéro '3'
 L'application vous confirmera votre choix, puis vous proposera un lien vous permettant de sélectionner l'url du livre voulu **https://books.toscrape.com/**.
 Copier et coller l'url dans l'invité de commande, Entrée
 Dans le fichier book_extraction puis data_picture_file, vous allez pouvoir récupérer les informations extraites.
-
 
 ## Auteurs
 

@@ -82,6 +82,7 @@ def one_category_scraper():
     bs.write_book_to_csv(books_data)
     bs.save_picture_to_folder(book_picture)
 
+
 def one_book_scraper(one_book_url):
     book_data = []
     book_picture = []
