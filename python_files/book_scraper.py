@@ -4,18 +4,14 @@ from bs4 import BeautifulSoup
 from slugify import slugify 
 import csv
 import os
-from urllib.parse import urlparse
+from urllib.parse import urlparse, urljoin
+import urllib.parse
 import datetime
 
-
-#lien de la page d'accueille à scrapper
-#
-url = 'https://books.toscrape.com/'
-SESSION = requests.session()
-
-
+############################# Extraction ###########################
 def get_soup(url):
     """récupérer les informations du site web"""
+    SESSION = requests.session()
     reponses = SESSION.get(url)
     if reponses.ok:
         soup = BeautifulSoup(reponses.content, 'html.parser')
@@ -41,7 +37,7 @@ def get_category_urls(url):
 
 
 def get_books_urls(url):
-    """récuperer les lien des livres la page à scrapper"""
+    """récuperer les lien des livres de la page à scrapper"""
     links = []
     soup = get_soup(url)
     tdl = soup.findAll('h3')
@@ -61,14 +57,15 @@ def get_next_page(url):
     if not next_page:
         return None
     else:
-        a = next_page.find('a')
-        next_page_link = a['href']
-        link = url[:-10] + next_page_link
-    
-    return link
+        next_page_link = next_page.find('a')['href']
+        parse_url = urllib.parse.urlparse(url)
+        base_url = f'{parse_url.scheme}://{parse_url.netloc}{parse_url.path.rsplit('/', 1)[0]}/' 
+        next_page_url = urljoin(base_url, next_page_link)
+
+    return next_page_url
 
 
-def get_all_category_name():
+def get_one_category_data():
     """Fonction qui permet de récupérer le nom des catégories"""
     category_url = get_category_urls('https://books.toscrape.com/catalogue/category/books_1/index.html')
     category_data = []
@@ -97,11 +94,11 @@ def get_all_category_name():
            
     except:
         print("L'entrée saisie de la catégorie n'est pas valide")
+
     return category_url
 
-#récuperer les informations de chaque livre
-#code UPC, price including taxe, price exluding taxe,
-# number available,  
+
+#récuperer les informations de chaque livre code UPC, price including taxe, price exluding taxe, number available,  
 def get_book_data(url):
     """récuperer les informations de chaque livre"""
     book_data = {}
@@ -148,7 +145,6 @@ def get_book_data(url):
             star_rating = 5
         book_data['Star rating'] = star_rating
 
-
     #récuperer la catégorie du livre
     category = soup.find('ul', 'breadcrumb')
     li_list = category.find_all('li', limit = 4)
@@ -156,8 +152,10 @@ def get_book_data(url):
         book_category = li_list[2].a.get_text()
         book_data['category'] = book_category
 
+    #récupérer le titre du livre
     book_data['title'] = soup.find('h1').get_text()
 
+    #récupérer l'url du livre
     for urls in url:
         book_data['URL'] = url
     
@@ -174,6 +172,7 @@ def get_image_url(url):
     link = link_image[5:]
     books_pict['title'] = image['alt']
     books_pict['image_url'] = 'https://books.toscrape.com/' + link
+
     return books_pict
 
    
@@ -196,7 +195,7 @@ def write_book_to_csv(book_data):
         writer = csv.DictWriter(file, fieldnames=fieldnames)
         writer.writeheader()
         writer.writerows(book_data)
-
+ 
 
 def save_picture_to_folder(books_pict):
     base_path = os.path.dirname(os.path.abspath(__file__))
@@ -204,20 +203,22 @@ def save_picture_to_folder(books_pict):
 
     for books in books_pict:
         now = datetime.datetime.now()
-        date_str = now.strftime('%Y-%m-%d')
+        date_str = now.strftime('%d-%m-%Y')
         date_folder_path = os.path.join(folder_path, date_str)
         if not os.path.exists(date_folder_path):
             os.makedirs(date_folder_path)
+
         file_name = slugify(books.get('title')) + '.jpg'
         image_url = books['image_url']
         full_path = os.path.join(date_folder_path, file_name)
+        
         if file_name not in date_folder_path:
             try:
                 res = requests.get(image_url)
-                res.raise_for_status()  # Raise an exception for unsuccessful requests (status codes not 2xx)
+                res.raise_for_status()
                 with open(full_path, 'wb') as file:
                     file.write(res.content)
             except requests.exceptions.RequestException as e:
-                print(f"Error downloading image: {e}")  # Log or handle download errors
+                print(f"Error downloading image: {e}")
         else:
             pass
