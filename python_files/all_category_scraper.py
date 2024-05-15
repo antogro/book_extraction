@@ -80,7 +80,6 @@ def one_category_scraper():
 def one_book_scraper(one_book_url):
     """Sraping of one book"""
     books_data = []
-    book_picture = []
 
     books_data.append(bs.get_book_data(one_book_url))
 

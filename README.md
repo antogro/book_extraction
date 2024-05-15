@@ -41,22 +41,23 @@ Ensuite vous allez devoir extraire le document, ouvrez le dossier puis glisser l
 
 Il vous faut installer Python 3.9.10 ou plus pour faire fonctionner le programme.  
 [Lien pour télécharger la dernière version de python](https://www.python.org/downloads/)
-
+```
 Pour créer votre environnement virtuel, il faut vous placer dans l'inviter de commande (CMD) ouvert précédement.
 Pour cela utilisé la commance *cd*
+```
 ```cd C:\Users\anton\Bureau\openclassroom\book_extraction``` 
+```
 utilisez la commande suivante dans votre invité de commande pour créer votre environnement:
+```
 ```bash
 python -m venv env
 
 ```
-**Entrée**
 
 Puis Activer votre environnement virtuelle:
 ```bash
 env/scripts/activate
 ```
-**Entrée**
 
 
 ### Etape 2: Installer les packages
@@ -64,8 +65,6 @@ Les packages permettent un bon fonctionnement de l'application, ne les oubliez p
 ```bash
 pip install -r requirements.txt
 ```
-**Entrée**
-
 
 ### Etape 3: Lancer l'application
 - Enfin, pour lancer l'application,
@@ -74,7 +73,6 @@ lancez le programme avec la commande suivante:
 ```bash
 python main.py
 ```
-**Entrée**
                         
 Voilà votre programme est maintenant opérationnel, vous n'avez plus qu'à suivre les consignes.
 
@@ -86,18 +84,17 @@ Pour lancer l'application, il vous faut taper la commande suivante:
 ```bash
 python main.py
 ```
-**Entrée**
 
 Ensuite le programme vous proposera 4 choix : 
 - 1 : Ecrivez 1 si vous souhaitez scraper toutes les données de toutes les catégories
 - 2 : Ecrivez 2 si vous souhaitez scraper les données d'une catégorie
 - 3 : Ecrivez 3 si vous souhaitez scraper les données d'un livre
 - 4 : Ecrivez 4 si vous souhaitez Quittez l'application d'extraction de livre.
-
-Pour mon exemple, je vais choisir le numéro '3'
-L'application vous confirmera votre choix, puis vous proposera un lien vous permettant de sélectionner l'url du livre voulu **https://books.toscrape.com/**.
+```
+Pour mon exemple, je vais choisir le numéro '3' l'application vous confirmera votre choix,
+puis vous proposera un lien vous permettant de sélectionner l'url du livre voulu **https://books.toscrape.com/**.
 Copier et coller l'url dans l'invité de commande, 
-Entrée.
+```
 Dans le fichier book_extraction puis data, vous allez pouvoir récupérer les informations extraites.
 
 ## Auteurs
