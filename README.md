@@ -7,13 +7,14 @@ L'application Book_scraper permet d'extraire les informations (titre, code UPC, 
 
 ## Installation
 
-Pour installer le projet, il faut cloner le repository, soit en utilisant la clé SSH, ou en téléchargeant le dossier zipper du repository.
+Pour installer le projet, il faut cloner le repository, soit en utilisant la clé SSH, ou en téléchargeant le dossier zipper du repository. 
 [lien du repository :](https://github.com/antogro/book_extraction.git)
-
+**Pour chaque ligne de code coller dans l'invité de commande, veuillez cliquer sur entrée.**
 
 ### 1 - Git clone (cloner le repository)
 
-Pour cloner le repository il va vous falloir ouvrir l'inviter de commande (CMD).
+Pour cloner le repository il va vous falloir ouvrir l'inviter de commande (CMD), si cette méthode n'est pas fonctionnel,
+veuillez suivre l'étape du téléchargement du repository.
 Puis Copier/Coller le bout de code suivant dans l'invité de commande, puis taper sur la touche Entrée 
 
 ```bash
@@ -21,7 +22,7 @@ git clone git@github.com:antogro/book_extraction.git
 ```
 
 Après clonage du repository, retournez dans votre invité de commande, puis positionnez-vous dans le dossier contenant l'application
-    Pour cela, utilisez la commande suivante:
+    Pour cela, utilisez la commande suivante, puis Entrée :
 ```bash
 cd book_extraction
 ```
@@ -29,9 +30,9 @@ cd book_extraction
 ### 1 bis - Téléchargement du repository compressé (zipper)
 
 [lien du repository :](https://github.com/antogro/book_extraction.git)
-Télécharger le code grâce au lien du repository , en cliquant sur le bouton **<> Code** puis sur **Download ZIP** ou **Télécharger le ZIP**
-Ensuite vous allez devoir extraire le document dans le dossier choisi.
-Placez vous dans ce dossier, clique droit sur le milieu de la page, puis cliquer sur **Ouvrir dans le terminal**
+Télécharger le code grâce au lien du repository, en cliquant sur le bouton **<> Code** tout en haut de la page, puis sur **Download ZIP** ou **Télécharger le ZIP**
+Ensuite vous allez devoir extraire le document, ouvrez le dossier puis glisser le fichier dans le dossier selectionné.
+
 
 
 ## Usage
@@ -41,15 +42,21 @@ Placez vous dans ce dossier, clique droit sur le milieu de la page, puis cliquer
 Il vous faut installer Python 3.9.10 ou plus pour faire fonctionner le programme.  
 [Lien pour télécharger la dernière version de python](https://www.python.org/downloads/)
 
-Pour créer votre environnement virtuel, il vous faut ouvrir l'inviter de commande (CMD).
+Pour créer votre environnement virtuel, il faut vous placer dans l'inviter de commande (CMD) ouvert précédement.
+Pour cela utilisé la commance *cd*
+```cd C:\Users\anton\Bureau\openclassroom\book_extraction``` 
 utilisez la commande suivante dans votre invité de commande pour créer votre environnement:
 ```bash
 python -m venv env
+
 ```
+**Entrée**
+
 Puis Activer votre environnement virtuelle:
 ```bash
 env/scripts/activate
 ```
+**Entrée**
 
 
 ### Etape 2: Installer les packages
@@ -57,6 +64,7 @@ Les packages permettent un bon fonctionnement de l'application, ne les oubliez p
 ```bash
 pip install -r requirements.txt
 ```
+**Entrée**
 
 
 ### Etape 3: Lancer l'application
@@ -66,6 +74,7 @@ lancez le programme avec la commande suivante:
 ```bash
 python main.py
 ```
+**Entrée**
                         
 Voilà votre programme est maintenant opérationnel, vous n'avez plus qu'à suivre les consignes.
 
@@ -77,6 +86,7 @@ Pour lancer l'application, il vous faut taper la commande suivante:
 ```bash
 python main.py
 ```
+**Entrée**
 
 Ensuite le programme vous proposera 4 choix : 
 - 1 : Ecrivez 1 si vous souhaitez scraper toutes les données de toutes les catégories
@@ -86,8 +96,9 @@ Ensuite le programme vous proposera 4 choix :
 
 Pour mon exemple, je vais choisir le numéro '3'
 L'application vous confirmera votre choix, puis vous proposera un lien vous permettant de sélectionner l'url du livre voulu **https://books.toscrape.com/**.
-Copier et coller l'url dans l'invité de commande, Entrée
-Dans le fichier book_extraction puis data_picture_file, vous allez pouvoir récupérer les informations extraites.
+Copier et coller l'url dans l'invité de commande, 
+Entrée.
+Dans le fichier book_extraction puis data, vous allez pouvoir récupérer les informations extraites.
 
 ## Auteurs
 

@@ -7,7 +7,7 @@ import pathlib
 import pandas as pd
 from urllib.parse import urlparse, urljoin
 import urllib.parse
-import datetime
+import re
 
 ############################# Extraction / Transformation ###########################
 def get_soup(url):
@@ -30,7 +30,7 @@ def get_category_urls(url):
     for li in li_list:
         a = li.find(['a'])
         link = a['href']
-        urls_category = link.replace('../', '')
+        link.replace('../', '')
         category_link.append('https://books.toscrape.com/' + link)
         category_links = category_link[1:]
 
@@ -128,22 +128,14 @@ def get_book_data(url):
 
     #extrcat book information (UPC, price taxe, price without taxe, stocks)
     tds = soup.findAll('th')
+
     th_list = [th.get_text() for th in tds if th.get_text()]
     tds = soup.findAll('td')
     td_list = [td.get_text() for td in tds if td.get_text()]
     product_informations = {th_list[i]: td_list[i] for i in range(len(th_list))}
+   
     del product_informations['Product Type'], product_informations['Tax'],  product_informations['Number of reviews']
-    for key, value in product_informations.items():
-        if key == 'UPC':
-            book_data[key]= ''.join(c for c in value or c =='.')
-        elif key == 'Price (excl. tax)':
-            book_data[key]= ''.join(c for c in value or c =='.')
-        elif key == 'Price (incl. tax)':
-            book_data[key]=''.join(c for c in value  or c =='.')
-        elif key == 'Availability':
-            book_data[key]=''.join(c for c in value if c.isdigit())
-            
-    #extract book description
+
     paragraphe_description = soup.find(id = 'content_inner')
 
     #extrcat category book
@@ -155,15 +147,18 @@ def get_book_data(url):
     #book data dictionnary
     book_data = {
         'title': soup.find('h1').get_text(),
-        'url': url,
-        'picture_url': get_image_url(soup),
         'category': book_category,
         'star_rating': reviews_rating(soup),
+        'url': url,
+        'picture_url': get_image_url(soup),
         'description': paragraphe_description.findAll('p')[3].get_text()
     }
+    book_data.update(product_informations)
+
+    
+    book_data['Availability'] = int(re.search(r'\((\d+) available\)', book_data['Availability']).group(1))
+
     return book_data
-
-
 
 def get_image_url(soup):
     """retrieve books url"""
@@ -176,6 +171,7 @@ def get_image_url(soup):
 
     return books_pict
 
+get_book_data('https://books.toscrape.com/catalogue/tipping-the-velvet_999/index.html')
 
 def save_picture_to_folder(book_data: dict):
     """Save book image to folder"""
