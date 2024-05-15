@@ -56,7 +56,7 @@ python -m venv env
 
 Puis Activer votre environnement virtuelle:
 ```bash
-env/scripts/activate
+env\scripts\activate
 ```
 
 
