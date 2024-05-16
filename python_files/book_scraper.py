@@ -14,10 +14,12 @@ def get_soup(url):
     """retrieve all the information of the url"""
     SESSION = requests.session()
     reponses = SESSION.get(url)
+    
     if reponses.ok:
         soup = BeautifulSoup(reponses.content, 'html.parser')
         if soup is None:
             print('Une erreur est survenue lors de l\'extraction de donnée')
+
         return soup
     
 
@@ -154,11 +156,11 @@ def get_book_data(url):
         'description': paragraphe_description.findAll('p')[3].get_text()
     }
     book_data.update(product_informations)
-
     
     book_data['Availability'] = int(re.search(r'\((\d+) available\)', book_data['Availability']).group(1))
 
     return book_data
+
 
 def get_image_url(soup):
     """retrieve books url"""
@@ -171,7 +173,6 @@ def get_image_url(soup):
 
     return books_pict
 
-get_book_data('https://books.toscrape.com/catalogue/tipping-the-velvet_999/index.html')
 
 def save_picture_to_folder(book_data: dict):
     """Save book image to folder"""
