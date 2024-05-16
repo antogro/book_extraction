@@ -15,14 +15,13 @@ Pour installer le projet, il faut cloner le repository, soit en utilisant la cl�
 
 Pour cloner le repository il va vous falloir ouvrir l'inviter de commande (CMD), si cette méthode n'est pas fonctionnel,
 veuillez suivre l'étape du téléchargement du repository.
-Puis Copier/Coller le bout de code suivant dans l'invité de commande, puis taper sur la touche Entrée 
-
+Puis Copier/Coller le bout de code suivant dans l'invité de commande.
 ```bash
 git clone git@github.com:antogro/book_extraction.git
 ```
 
 Après clonage du repository, retournez dans votre invité de commande, puis positionnez-vous dans le dossier contenant l'application
-    Pour cela, utilisez la commande suivante, puis Entrée :
+    Pour cela, utilisez la commande suivante:
 ```bash
 cd book_extraction
 ```
