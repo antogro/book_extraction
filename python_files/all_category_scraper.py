@@ -1,24 +1,4 @@
 import python_files.book_scraper as bs
-import requests
-from urllib.parse import urlparse
-
-
-def get_category_name():
-    """retrieve category name """
-    category_url = bs.get_category_urls('https://books.toscrape.com/catalogue/category/books_1/index.html')
-    category_name = set()
-    for row in category_url:
-        url = row.strip()
-        try:
-            reponses = requests.get(url)
-            parsed_url = urlparse(reponses.url)
-        except Exception as e:
-            print(f"Erreur lors de la récupération des données pour {url}: {e}")
-
-            category = parsed_url.path.split('/')[-2]
-            category = category.rstrip('_0123456789').rstrip('_')
-            category_name.add(category)
-        return category_name
 
 
 def all_category_scraper():
@@ -66,6 +46,7 @@ def one_category_scraper():
         next_page_url = bs.get_next_page(one_category_url)
         if next_page_url is None:
             break
+
         one_category_url = next_page_url
         books_url.extend(bs.get_books_urls(one_category_url))
     
